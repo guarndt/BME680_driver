@@ -341,23 +341,6 @@
 #define BME680_GET_BITS_POS_0(reg_data, bitname)  (reg_data & (bitname##_MSK))
 
 /** Type definitions */
-/*!
- * Generic communication function pointer
- * @param[in] dev_id: Place holder to store the id of the device structure
- *                    Can be used to store the index of the Chip select or
- *                    I2C address of the device.
- * @param[in] reg_addr:	Used to select the register the where data needs to
- *                      be read from or written to.
- * @param[in/out] reg_data: Data array to read/write
- * @param[in] len: Length of the data array
- */
-typedef int8_t (*bme680_com_fptr_t)(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t len);
-
-/*!
- * Delay function pointer
- * @param[in] period: Time period in milliseconds
- */
-typedef void (*bme680_delay_fptr_t)(uint32_t period);
 
 /*!
  * @brief Interface selection Enumerations
@@ -505,7 +488,7 @@ struct	bme680_gas_sett {
 /*!
  * @brief BME680 device structure
  */
-struct	bme680_dev {
+struct bme680_dev {
 	/*! Chip Id */
 	uint8_t chip_id;
 	/*! Device Id */
@@ -528,12 +511,12 @@ struct	bme680_dev {
 	uint8_t new_fields;
 	/*! Store the info messages */
 	uint8_t info_msg;
-	/*! Bus read function pointer */
-	bme680_com_fptr_t read;
-	/*! Bus write function pointer */
-	bme680_com_fptr_t write;
-	/*! delay function pointer */
-	bme680_delay_fptr_t delay_ms;
+	/*! Bus read function  */
+	virtual int8_t read(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t len) = 0;
+	/*! Bus write function */
+	virtual int8_t write(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t len) = 0;
+	/*! delay function */
+	virtual void delay_ms(uint32_t period) = 0;
 	/*! Communication function result */
 	int8_t com_rslt;
 };

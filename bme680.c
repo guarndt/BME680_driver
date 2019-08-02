@@ -1355,7 +1355,7 @@ static int8_t null_ptr_check(const struct bme680_dev *dev)
 {
 	int8_t rslt;
 
-	if ((dev == NULL) || (dev->read == NULL) || (dev->write == NULL) || (dev->delay_ms == NULL)) {
+	if ((dev == NULL)/* || (dev->read == NULL) || (dev->write == NULL) || (dev->delay_ms == NULL)*/) {
 		/* Device structure pointer is not valid */
 		rslt = BME680_E_NULL_PTR;
 	} else {
