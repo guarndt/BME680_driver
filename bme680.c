@@ -663,7 +663,7 @@ void bme680_set_profile_dur(uint16_t duration, struct bme680_dev *dev)
 
 	tph_dur += UINT32_C(1); /* Wake up duration of 1ms */
 	/* The remaining time should be used for heating */
-	dev->gas_sett.heatr_dur = duration - (uint16_t) tph_dur;
+	dev->gas_sett.heatr_dur[dev->gas_sett.nb_conv] = duration - (uint16_t) tph_dur;
 }
 
 /*!
@@ -693,7 +693,7 @@ void bme680_get_profile_dur(uint16_t *duration, const struct bme680_dev *dev)
 	/* Get the gas duration only when the run gas is enabled */
 	if (dev->gas_sett.run_gas) {
 		/* The remaining time should be used for heating */
-		*duration += dev->gas_sett.heatr_dur;
+		*duration += dev->gas_sett.heatr_dur[dev->gas_sett.nb_conv];
 	}
 }
 
@@ -812,14 +812,16 @@ static int8_t set_gas_config(struct bme680_dev *dev)
 	rslt = null_ptr_check(dev);
 	if (rslt == BME680_OK) {
 
-		uint8_t reg_addr[2] = {0};
-		uint8_t reg_data[2] = {0};
+		uint8_t reg_addr[2 * BME680_RES_HEAT0_ADDR] = {0};
+		uint8_t reg_data[2 * BME680_RES_HEAT0_ADDR] = {0};
 
 		if (dev->power_mode == BME680_FORCED_MODE) {
-			reg_addr[0] = BME680_RES_HEAT0_ADDR;
-			reg_data[0] = calc_heater_res(dev->gas_sett.heatr_temp, dev);
-			reg_addr[1] = BME680_GAS_WAIT0_ADDR;
-			reg_data[1] = calc_heater_dur(dev->gas_sett.heatr_dur);
+			for (uint8_t i = 0; i < BME680_HEATER_SET_COUNT; ++i) {
+				reg_addr[2*i] = i + BME680_RES_HEAT0_ADDR;
+				reg_data[2*i] = calc_heater_res(dev->gas_sett.heatr_temp[i], dev);
+				reg_addr[2*i+1] = i + BME680_GAS_WAIT0_ADDR;
+				reg_data[2*i+1] = calc_heater_dur(dev->gas_sett.heatr_dur[i]);
+			}
 			dev->gas_sett.nb_conv = 0;
 		} else {
 			rslt = BME680_W_DEFINE_PWR_MODE;
@@ -855,11 +857,11 @@ static int8_t get_gas_config(struct bme680_dev *dev)
 		if (rslt == BME680_OK) {
 			rslt = bme680_get_regs(reg_addr1, &reg_data, 1, dev);
 			if (rslt == BME680_OK) {
-				dev->gas_sett.heatr_temp = reg_data;
+				dev->gas_sett.heatr_temp[dev->gas_sett.nb_conv] = reg_data;
 				rslt = bme680_get_regs(reg_addr2, &reg_data, 1, dev);
 				if (rslt == BME680_OK) {
 					/* Heating duration register value */
-					dev->gas_sett.heatr_dur = reg_data;
+					dev->gas_sett.heatr_dur[dev->gas_sett.nb_conv] = reg_data;
 				}
 			}
 		}

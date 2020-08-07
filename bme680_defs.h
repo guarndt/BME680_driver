@@ -156,6 +156,7 @@
 #define BME680_FIELD0_ADDR		UINT8_C(0x1d)
 
 /** Heater settings */
+#define BME680_HEATER_SET_COUNT		UINT8_C(10)
 #define BME680_RES_HEAT0_ADDR		UINT8_C(0x5a)
 #define BME680_GAS_WAIT0_ADDR		UINT8_C(0x64)
 
@@ -479,10 +480,10 @@ struct	bme680_gas_sett {
 	uint8_t heatr_ctrl;
 	/*! Run gas enable value */
 	uint8_t run_gas;
-	/*! Heater temperature value */
-	uint16_t heatr_temp;
-	/*! Duration profile value */
-	uint16_t heatr_dur;
+	/*! Heater temperature value degree Celsius */
+	uint16_t heatr_temp[BME680_HEATER_SET_COUNT] = { 400, 370, 340, 310, 280, 250, 220, 190, 160, 130 };
+	/*! Duration profile value milliseconds */
+	uint16_t heatr_dur[BME680_HEATER_SET_COUNT] =  { 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 };
 };
 
 /*!
