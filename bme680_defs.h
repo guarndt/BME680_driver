@@ -512,14 +512,17 @@ struct bme680_dev {
 	uint8_t new_fields;
 	/*! Store the info messages */
 	uint8_t info_msg;
+	/*! Communication function result */
+	int8_t com_rslt;
+
 	/*! Bus read function  */
 	virtual int8_t read(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t len) = 0;
 	/*! Bus write function */
 	virtual int8_t write(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t len) = 0;
 	/*! delay function */
 	virtual void delay_ms(uint32_t period) = 0;
-	/*! Communication function result */
-	int8_t com_rslt;
+
+	virtual ~bme680_dev() = default;
 };
 
 

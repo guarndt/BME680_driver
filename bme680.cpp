@@ -812,8 +812,8 @@ static int8_t set_gas_config(struct bme680_dev *dev)
 	rslt = null_ptr_check(dev);
 	if (rslt == BME680_OK) {
 
-		uint8_t reg_addr[2 * BME680_RES_HEAT0_ADDR] = {0};
-		uint8_t reg_data[2 * BME680_RES_HEAT0_ADDR] = {0};
+		uint8_t reg_addr[2 * BME680_HEATER_SET_COUNT] = {0};
+		uint8_t reg_data[2 * BME680_HEATER_SET_COUNT] = {0};
 
 		if (dev->power_mode == BME680_FORCED_MODE) {
 			for (uint8_t i = 0; i < BME680_HEATER_SET_COUNT; ++i) {
@@ -827,7 +827,7 @@ static int8_t set_gas_config(struct bme680_dev *dev)
 			rslt = BME680_W_DEFINE_PWR_MODE;
 		}
 		if (rslt == BME680_OK)
-			rslt = bme680_set_regs(reg_addr, reg_data, 2, dev);
+			rslt = bme680_set_regs(reg_addr, reg_data, 2 * BME680_HEATER_SET_COUNT, dev);
 	}
 
 	return rslt;
