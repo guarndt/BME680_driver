@@ -341,13 +341,13 @@ int8_t bme680_set_regs(const uint8_t *reg_addr, const uint8_t *reg_data, uint8_t
 {
 	int8_t rslt;
 	/* Length of the temporary buffer is 2*(length of register)*/
-	uint8_t tmp_buff[BME680_TMP_BUFFER_LENGTH] = { 0 };
+	uint8_t * tmp_buff{new uint8_t[2 * len]};
 	uint16_t index;
 
 	/* Check for null pointer in the device structure*/
 	rslt = null_ptr_check(dev);
 	if (rslt == BME680_OK) {
-		if ((len > 0) && (len < BME680_TMP_BUFFER_LENGTH / 2)) {
+		if (len > 0) {
 			/* Interleave the 2 arrays */
 			for (index = 0; index < len; index++) {
 				if (dev->intf == BME680_SPI_INTF) {
@@ -369,7 +369,7 @@ int8_t bme680_set_regs(const uint8_t *reg_addr, const uint8_t *reg_data, uint8_t
 			rslt = BME680_E_INVALID_LENGTH;
 		}
 	}
-
+	delete[] tmp_buff;
 	return rslt;
 }
 
