@@ -483,7 +483,7 @@ struct	bme680_gas_sett {
 	/*! Heater temperature value degree Celsius */
 	uint16_t heatr_temp[BME680_HEATER_SET_COUNT] = { 400, 370, 340, 310, 280, 250, 220, 190, 160, 130 };
 	/*! Duration profile value milliseconds */
-	uint16_t heatr_dur[BME680_HEATER_SET_COUNT] =  { 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 };
+	uint16_t heatr_dur[BME680_HEATER_SET_COUNT] =  {  50,  50,  50,  50,  50,  50,  50,  50,  50,  50 };
 };
 
 /*!

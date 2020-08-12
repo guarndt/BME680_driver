@@ -822,7 +822,6 @@ static int8_t set_gas_config(struct bme680_dev *dev)
 				reg_addr[2*i+1] = i + BME680_GAS_WAIT0_ADDR;
 				reg_data[2*i+1] = calc_heater_dur(dev->gas_sett.heatr_dur[i]);
 			}
-			dev->gas_sett.nb_conv = 0;
 		} else {
 			rslt = BME680_W_DEFINE_PWR_MODE;
 		}
