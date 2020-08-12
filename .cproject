@@ -122,5 +122,12 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="_Raspi Release">
+			<resource resourceType="PROJECT" workspacePath="/BME680_driver"/>
+		</configuration>
+		<configuration configurationName="_Raspi Debug">
+			<resource resourceType="PROJECT" workspacePath="/BME680_driver"/>
+		</configuration>
+	</storageModule>
 </cproject>
