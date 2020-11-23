@@ -3,3 +3,8 @@
 /_Raspi Debug/
 /_Raspi Release/
 /_Odroid C2 Release/
+/_Odroid C2 Clang Release/
+/_Odroid C2 Debug (Clang)/
+/_Odroid C2 Debug (LLVM)/
+/_Odroid C2 Debug/
+/_Raspi Debug (LLVM)/
