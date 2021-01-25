@@ -172,10 +172,9 @@ int8_t bme680_dev::bme680_set_regs(const uint8_t *reg_addr, const uint8_t *reg_d
 	int8_t rslt{BME680_OK};
 	/* Length of the temporary buffer is 2*(length of register)*/
 	uint8_t * tmp_buff{new uint8_t[2 * len]};
-	uint16_t index;
 	if (len > 0) {
 		/* Interleave the 2 arrays */
-		for (index = 0; index < len; index++) {
+		for (uint16_t index = 0; index < len; index++) {
 			if (this->intf == BME680_SPI_INTF) {
 				/* Set the memory page */
 				rslt = set_mem_page(reg_addr[index]);

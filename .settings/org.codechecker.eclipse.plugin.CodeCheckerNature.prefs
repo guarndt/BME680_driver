@@ -1,0 +1,8 @@
+ANAL_OPTIONS=
+ANAL_THREADS=4
+CHECKER_PATH=/mnt/d/firedect/git/CodeChecker/build/CodeChecker/bin/_CodeChecker
+CHECKER_WORKSPACE=/mnt/d/firedect/dev/workspace-wsl/.codechecker/BME680_driver
+COMPILERS=gcc\:g++\:clang\:clang++
+IS_GLOBAL=true
+RES_METHOD=PRE
+eclipse.preferences.version=1
